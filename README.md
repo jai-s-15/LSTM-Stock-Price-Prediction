@@ -3,27 +3,31 @@ A PyTorch LSTM model that predicts Apple stock prices using 30-day historical se
 
 ## Key Concepts
 
-**Sequences**
+### Sequences
+
 We make predictions on price using a sequential pattern: we use 30 day sequences to predict day 31. This creates overlapping windows ([days 1-30→31], [days 2-31→32], etc.) to generate multiple training examples from the continuous dataset.
 
-**Data Scaling**
+### Data Scaling
+
 Stock prices ($50-$250) are normalised to (-2, 2) using StandardScaler. This is because large values cause unstable gradients. Our predictions are rescaled back to actual prices for interpretation.
 
-**Train vs Test Split**
+### Train vs Test Split
+
 First 80% of data trains the model, last 20% tests it. We ensure we use a time ordered split so we never use future data to predict the past.
 
-**LSTM Architecture**
+### LSTM Architecture
 
 We apply a stacked LSTM to learn different levels of pattern abstraction. Each of the layers has 32 hidden units balancing the trade-off between capacity and overfitting risk.
 
-**Training Process**
+### Training Process
 - Conduct forward pass to feed sequences and get predictions
 - Compute MSE loss (mean squared error)
 - Carry out backward pass to calculate gradients
 - Update weights using Adam optimiser
 - Repeat the process over 200 epochs
 
-**Results**
+### Results
+
 Train RMSE: $4.71 | Test RMSE: $10.44
 
 On training data, predictions are on average within about $4.71 of the true stock price.
